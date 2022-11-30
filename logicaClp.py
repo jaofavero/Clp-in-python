@@ -110,7 +110,7 @@ def opNot(a):
 
 def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
     a = False
-    b = True
+    b = False
     hasAnd = True
     hasOr = True
     cabo = False
@@ -179,7 +179,10 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
                 aux = 'l' + expressao[auxIndex+2]
                 b = LED[LED.index(aux)+1]
             elif expressao[auxIndex+1] == 'b':
+                print("Entro")
+                print(auxIndex)
                 b = BTN[auxIndex+1]
+                print(BTN[auxIndex+1])
             # checar o que vem antes
             if expressao[auxIndex-1] is bool:
                 b = expressao[auxIndex-1]
@@ -215,7 +218,8 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
 
 def valorExpressao(expressao, BTN, LED, MEMORIA):
     if ':' in expressao:
-        maiorNivel = expressao[expressao.index(':')+1]
+        maiorNivel = int(expressao[expressao.index(':')+1])
+        print(maiorNivel)
         inicio = 0
         fim = 0
         aux = 0
@@ -224,9 +228,18 @@ def valorExpressao(expressao, BTN, LED, MEMORIA):
         hasAbre = True
         hasFecha = True
         while hasAbre or hasFecha:
+            if maiorNivel == 1:
+                inicio = expressao.index('(')
+                fim = expressao.index(')')+1
+                auxBool = entreParenteses(
+                    expressao, fim, inicio, BTN, LED, MEMORIA)
+                print(auxBool)
+                expressao[inicio] = auxBool
+                del expressao[(inicio+1):fim]
+                maiorNivel = -1
             if (nivel == maiorNivel):
-                inicio = expressao.index('(', i)
-                fim = expressao.index(')', i)+1
+                inicio = int(expressao.index('(', i))
+                fim = int(expressao.index(')', i)+1)
                 auxBool = entreParenteses(
                     expressao, fim, inicio, BTN, LED, MEMORIA)
                 print(auxBool)
@@ -278,7 +291,6 @@ if (maiorNivel == -1):
     txt = "Entrada {} invalida."
 LED[LED.index('l1')+2].append(':')
 LED[LED.index('l1')+2].append(str(maiorNivel))
-
 
 valorExpressao(LED[LED.index('l1')+2], BTN, LED, MEMORIA)
 # loop modo run
