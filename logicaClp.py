@@ -240,8 +240,8 @@ def valorExpressao(expressao, BTN, LED, MEMORIA):
                 del expressao[(inicio+1):fim]
                 maiorNivel = -1
             if (nivel == maiorNivel):
-                inicio = int(expressao.index('(', i))
-                fim = int(expressao.index(')', i)+1)
+                inicio = int(expressao.index('('))
+                fim = int(expressao.index(')')+1)
                 auxBool = entreParenteses(
                     expressao, fim, inicio, BTN, LED, MEMORIA)
                 expressao[inicio] = auxBool
@@ -280,6 +280,7 @@ MEMORIA = ['m1', False, "expressao", 'm2', False, "expressao", 'm3', False, "exp
 
 
 # interface info-------------------------------------------------
+comando = "(b1+b2*!(b3*b4))"
 run = False
 
 # ---------------------------------------------------------------
@@ -298,8 +299,12 @@ LED[LED.index('l1')+2].append(str(maiorNivel))
 
 
 
-BTN[0] = True
+BTN[0] = False
 BTN[1] = True
+BTN[2] = True
+BTN[3] = False
+BTN[4] = True
+BTN[5] = True
 
 
 LED[LED.index('l1')+1] = valorExpressao(LED[LED.index('l1')+2],
