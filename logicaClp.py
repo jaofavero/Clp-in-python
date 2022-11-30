@@ -1,3 +1,4 @@
+import PySimpleGUI as sg
 # MODO PROGRAMAÇÃO-------------------------------------------------------------------------------------------------------
 def formatacao(expressao):
     lista = []
@@ -106,8 +107,6 @@ def opNot(a):
         return True
 
 # fim operadores
-
-
 def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
     a = False
     b = False
@@ -182,7 +181,6 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
                 b = LED[LED.index(aux)+1]
             elif expressao[auxIndex+1] == 'b':
                 b = BTN[int(expressao[auxIndex+2])-1]
-                print(b)
             # checar o que vem antes
             if expressao[auxIndex-1] is bool:
                 a = expressao[auxIndex-1]
@@ -191,6 +189,7 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
                 a = MEMORIA[MEMORIA.index(aux)+1]
             elif expressao[auxIndex-1] == 'l':
                 aux = 'l' + expressao[auxIndex-2]
+                print(expressao[auxIndex-2])
                 a = LED[LED.index(aux)+1]
             elif expressao[auxIndex-2] == 'b':
                 a = BTN[int(expressao[auxIndex-1])-1]
@@ -219,8 +218,6 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
 
 
 def valorExpressao(expressao, BTN, LED, MEMORIA):
-    print(BTN[0])
-    print(BTN[1])
     if ':' in expressao:
         maiorNivel = int(expressao[expressao.index(':')+1])
         inicio = 0
@@ -272,42 +269,92 @@ def valorExpressao(expressao, BTN, LED, MEMORIA):
 # --------------------------------------------------------------------------------------------------------------------------------
 # main
 # ============================================================================================================================================================================================================================================
-LED = ['l1', False, "expressao", 'l2', False, "expressao", 'l3', False, "expressao", 'l4', False, "expressao",
-       'l5', False, "expressao", 'l6', False, "expressao", 'l7', False, "expressao", 'l8', False, "expressao",]
+
 BTN = [False, False, False, False, False, False, False, False,]
-MEMORIA = ['m1', False, "expressao", 'm2', False, "expressao", 'm3', False, "expressao",
+
+# front-end -----------------------------------------------------
+dados = [ 
+  
+    [sg.Text('Memória 1:', size = (15,0)), sg.InputText(size = (20,1), key='m1')],
+    [sg.Text('Memória 2:', size = (15,0)), sg.InputText(size = (20,1), key='m2')],
+    [sg.Text('Memória 3:', size = (15,0)), sg.InputText(size = (20,1), key='m3')],
+    [sg.Text('Memória 4:', size = (15,0)), sg.InputText(size = (20,1), key='m4')],
+    [sg.Text('Memória 5:', size = (15,0)), sg.InputText(size = (20,1), key='m5')],
+    [sg.Text('Memória 6:', size = (15,0)), sg.InputText(size = (20,1), key='m6')],
+    [sg.Text('===========================================: ', size = (300,0))],
+    [sg.Text('LED 1:', size = (15,0)), sg.InputText(size = (20,1), key='l1')],
+    [sg.Text('LED 2:', size = (15,0)), sg.InputText(size = (20,1), key='l2')],
+    [sg.Text('LED 3:', size = (15,0)), sg.InputText(size = (20,1), key='l3')],
+    [sg.Text('LED 4:', size = (15,0)), sg.InputText(size = (20,1), key='l4')],
+    [sg.Text('LED 5:', size = (15,0)), sg.InputText(size = (20,1), key='l5')],
+    [sg.Text('LED 6:', size = (15,0)), sg.InputText(size = (20,1), key='l6')],
+    [sg.Text('LED 7:', size = (15,0)), sg.InputText(size = (20,1), key='l7')],
+    [sg.Text('LED 8:', size = (15,0)), sg.InputText(size = (20,1), key='l8')],
+    [sg.Button('Run', size=(15,0))]]       
+layout = [[sg.Column(dados,size = (400,505))]]
+window = sg.Window('CLP', layout)
+
+
+
+
+while True:
+    LED = ['l1', False, "expressao", 'l2', False, "expressao", 'l3', False, "expressao", 'l4', False, "expressao",
+       'l5', False, "expressao", 'l6', False, "expressao", 'l7', False, "expressao", 'l8', False, "expressao",]
+    MEMORIA = ['m1', False, "expressao", 'm2', False, "expressao", 'm3', False, "expressao",
            'm4', False, "expressao", 'm5', False, "expressao", 'm6', False, "expressao"]
+    event, values = window.read()
+    if event == 'run':
+       MEMORIA[MEMORIA.index('m1')+2] = values['m1']
+       MEMORIA[MEMORIA.index('m2')+2] = values['m2']
+       MEMORIA[MEMORIA.index('m3')+2] = values['m3']
+       MEMORIA[MEMORIA.index('m4')+2] = values['m4']
+       MEMORIA[MEMORIA.index('m5')+2] = values['m5']
+       MEMORIA[MEMORIA.index('m6')+2] = values['m6']
+       LED[LED.index('l1')+2] = values['l1']
+       LED[LED.index('l2')+2] = values['l2']
+       LED[LED.index('l3')+2] = values['l3']
+       LED[LED.index('l4')+2] = values['l4']
+       LED[LED.index('l5')+2] = values['l5']
+       LED[LED.index('l6')+2] = values['l6']
+       LED[LED.index('l7')+2] = values['l7']
+       LED[LED.index('l8')+2] = values['l8']
 
 
-# interface info-------------------------------------------------
-comando = "(b1+b2*!(b3*b4))"
-run = False
-
-# ---------------------------------------------------------------
-# Modo codar
-LED[LED.index('l1')+2] = formatacao(comando)
-
-maiorNivel = acharNivel(LED[LED.index('l1')+2])
-if (maiorNivel == -1):
-    txt = "Entrada {} invalida."
-LED[LED.index('l1')+2].append(':')
-LED[LED.index('l1')+2].append(str(maiorNivel))
-
-# loop modo run
-
-# while run:
+    # interface info-------------------------------------------------
+    
 
 
+    comando = "(b1+b2)"
+    run = False
 
-BTN[0] = False
-BTN[1] = True
-BTN[2] = True
-BTN[3] = False
-BTN[4] = True
-BTN[5] = True
+    # ---------------------------------------------------------------
+    # Modo codar
+    LED[LED.index('l1')+2] = formatacao(comando)
+
+    maiorNivel = acharNivel(LED[LED.index('l1')+2])
+    if (maiorNivel == -1):
+        txt = "Entrada {} invalida."
+    LED[LED.index('l1')+2].append(':')
+    LED[LED.index('l1')+2].append(str(maiorNivel))
+
+    # loop modo run
+
+    # while run:
 
 
-LED[LED.index('l1')+1] = valorExpressao(LED[LED.index('l1')+2],
-                                        BTN, LED, MEMORIA)
-print(LED[LED.index('l1')+1])
-# ============================================================================================================================================================================================================================================
+
+    BTN[0] = False
+    BTN[1] = False
+    BTN[2] = True
+    BTN[3] = False
+    BTN[4] = True
+    BTN[5] = True
+
+
+    LED[LED.index('l1')+1] = valorExpressao(LED[LED.index('l1')+2],
+                                            BTN, LED, MEMORIA)
+    print(LED[LED.index('l1')+1])
+    # ============================================================================================================================================================================================================================================
+    if event == sg.WIN_CLOSED or event == 'Cancel':
+        break
+    window.close()
