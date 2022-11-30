@@ -114,6 +114,7 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
     hasAnd = True
     hasOr = True
     cabo = False
+    x=0
     i = inicio
     # conferir conteudo ja checado o valor
     # Checar Memoria
@@ -168,7 +169,8 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
                     aux = 'l' + expressao[auxIndex+3]
                     b = LED[LED.index(aux)+1]
                 elif expressao[auxIndex+2] == 'b':
-                    b = BTN[auxIndex+2]
+                    b = BTN[int(expressao[auxIndex+3])-1]
+                b = opNot(b)
             # sem not na frente
             elif expressao[auxIndex+1] is bool:
                 b = expressao[auxIndex+1]
@@ -179,24 +181,22 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
                 aux = 'l' + expressao[auxIndex+2]
                 b = LED[LED.index(aux)+1]
             elif expressao[auxIndex+1] == 'b':
-                print("Entro")
-                print(auxIndex)
-                b = BTN[auxIndex+1]
-                print(BTN[auxIndex+1])
+                b = BTN[int(expressao[auxIndex+2])-1]
+                print(b)
             # checar o que vem antes
             if expressao[auxIndex-1] is bool:
-                b = expressao[auxIndex-1]
+                a = expressao[auxIndex-1]
             elif expressao[auxIndex-2] == 'm':
                 aux = 'm' + expressao[auxIndex-1]
-                b = MEMORIA[MEMORIA.index(aux)+1]
+                a = MEMORIA[MEMORIA.index(aux)+1]
             elif expressao[auxIndex-1] == 'l':
                 aux = 'l' + expressao[auxIndex-2]
-                b = LED[LED.index(aux)+1]
+                a = LED[LED.index(aux)+1]
             elif expressao[auxIndex-2] == 'b':
-                b = BTN[auxIndex-2]
+                a = BTN[int(expressao[auxIndex-1])-1]
             if expressao[auxIndex-3] == '!':
                 inicioOp = inicioOp-1
-                b = opNot(b)
+                a = opNot(a)
             if (operacao == 1):
                 auxBool = opAnd(a, b)
             if (operacao == 2):
@@ -213,13 +213,16 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
         i = i + 1
         if (cabo):
             return expressao[inicioOp]
+    if(expressao[inicio-1])== '!':
+        expressao[inicioOp] = opNot(expressao[inicioOp])
     return expressao[inicioOp]
 
 
 def valorExpressao(expressao, BTN, LED, MEMORIA):
+    print(BTN[0])
+    print(BTN[1])
     if ':' in expressao:
         maiorNivel = int(expressao[expressao.index(':')+1])
-        print(maiorNivel)
         inicio = 0
         fim = 0
         aux = 0
@@ -233,7 +236,6 @@ def valorExpressao(expressao, BTN, LED, MEMORIA):
                 fim = expressao.index(')')+1
                 auxBool = entreParenteses(
                     expressao, fim, inicio, BTN, LED, MEMORIA)
-                print(auxBool)
                 expressao[inicio] = auxBool
                 del expressao[(inicio+1):fim]
                 maiorNivel = -1
@@ -242,7 +244,6 @@ def valorExpressao(expressao, BTN, LED, MEMORIA):
                 fim = int(expressao.index(')', i)+1)
                 auxBool = entreParenteses(
                     expressao, fim, inicio, BTN, LED, MEMORIA)
-                print(auxBool)
                 expressao[inicio] = auxBool
                 del expressao[(inicio+1):fim]
                 maiorNivel = maiorNivel-1
@@ -279,7 +280,6 @@ MEMORIA = ['m1', False, "expressao", 'm2', False, "expressao", 'm3', False, "exp
 
 
 # interface info-------------------------------------------------
-comando = "(b1+b2)"
 run = False
 
 # ---------------------------------------------------------------
@@ -292,11 +292,10 @@ if (maiorNivel == -1):
 LED[LED.index('l1')+2].append(':')
 LED[LED.index('l1')+2].append(str(maiorNivel))
 
-valorExpressao(LED[LED.index('l1')+2], BTN, LED, MEMORIA)
 # loop modo run
 
 # while run:
-valorExpressao(LED[LED.index('l1')+2], BTN, LED, MEMORIA)
+
 
 
 BTN[0] = True
