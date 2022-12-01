@@ -308,69 +308,69 @@ while True:
     # Modo codar
     event, values = window.read()
     if event == 'run':
-       MEMORIA[MEMORIA.index('m1')+2] = formatacao(values['m1'])
-       MEMORIA[MEMORIA.index('m2')+2] = formatacao(values['m2'])
-       MEMORIA[MEMORIA.index('m3')+2] = formatacao(values['m3'])
-       MEMORIA[MEMORIA.index('m4')+2] = formatacao(values['m4'])
-       MEMORIA[MEMORIA.index('m5')+2] = formatacao(values['m5'])
-       MEMORIA[MEMORIA.index('m6')+2] = formatacao(values['m6'])
-       LED[LED.index('l1')+2] = formatacao(values['l1'])
-       LED[LED.index('l2')+2] = formatacao(values['l2'])
-       LED[LED.index('l3')+2] = formatacao(values['l3'])
-       LED[LED.index('l4')+2] = formatacao(values['l4'])
-       LED[LED.index('l5')+2] = formatacao(values['l5'])
-       LED[LED.index('l6')+2] = formatacao(values['l6'])
-       LED[LED.index('l7')+2] = formatacao(values['l7'])
-       LED[LED.index('l8')+2] = formatacao(values['l8'])
-
-    # interface info-------------------------------------------------
-    LED[LED.index('l1')+2] = formatacao('(b1+b2')
-    print(LED[LED.index('l1')+2])
-    maiorNivel=0
-    i=1
-    while (i < 9):
-        aux = 'l' + str(i)
-        if (LED[LED.index(aux)+2] != ("expressao") ):
-            maiorNivel = acharNivel(LED[LED.index(aux)+2])
-            if (maiorNivel == -1):
-                txt = "Entrada {} invalida."
-            LED[LED.index(aux)+2].append(':')
-            LED[LED.index(aux)+2].append(str(maiorNivel))
-        if (i<7):
-            aux = 'm' + str(i)
-            if (MEMORIA[MEMORIA.index(aux)+2] != ("expressao") ):
-                maiorNivel = acharNivel(MEMORIA[MEMORIA.index(aux)+2])
+        MEMORIA[MEMORIA.index('m1')+2] = formatacao(values['m1'])
+        MEMORIA[MEMORIA.index('m2')+2] = formatacao(values['m2'])
+        MEMORIA[MEMORIA.index('m3')+2] = formatacao(values['m3'])
+        MEMORIA[MEMORIA.index('m4')+2] = formatacao(values['m4'])
+        MEMORIA[MEMORIA.index('m5')+2] = formatacao(values['m5'])
+        MEMORIA[MEMORIA.index('m6')+2] = formatacao(values['m6'])
+        LED[LED.index('l1')+2] = formatacao(values['l1'])
+        LED[LED.index('l2')+2] = formatacao(values['l2'])
+        LED[LED.index('l3')+2] = formatacao(values['l3'])
+        LED[LED.index('l4')+2] = formatacao(values['l4'])
+        LED[LED.index('l5')+2] = formatacao(values['l5'])
+        LED[LED.index('l6')+2] = formatacao(values['l6'])
+        LED[LED.index('l7')+2] = formatacao(values['l7'])
+        LED[LED.index('l8')+2] = formatacao(values['l8'])
+        # interface info-------------------------------------------------
+        maiorNivel=0
+        i=1
+        while (i < 9):
+            print("teste")
+            aux = 'l' + str(i)
+            if (LED[LED.index(aux)+2] != ("expressao") ):
+                maiorNivel = acharNivel(LED[LED.index(aux)+2])
                 if (maiorNivel == -1):
                     txt = "Entrada {} invalida."
-                MEMORIA[MEMORIA.index(aux)+2].append(':')
-                MEMORIA[MEMORIA.index(aux)+2].append(str(maiorNivel))
-        i = i+1
+                LED[LED.index(aux)+2].append(':')
+                LED[LED.index(aux)+2].append(str(maiorNivel))
+            if (i<7):
+                aux = 'm' + str(i)
+                if (MEMORIA[MEMORIA.index(aux)+2] != ("expressao") ):
+                    maiorNivel = acharNivel(MEMORIA[MEMORIA.index(aux)+2])
+                    if (maiorNivel == -1):
+                        txt = "Entrada {} invalida."
+                    MEMORIA[MEMORIA.index(aux)+2].append(':')
+                    MEMORIA[MEMORIA.index(aux)+2].append(str(maiorNivel))
+            i = i+1
 
-    # loop modo run
+        # loop modo run
 
-    # while run:
+        # while run:
 
 
 
-    BTN[0] = False
-    BTN[1] = True
-    BTN[2] = True
-    BTN[3] = False
-    BTN[4] = True
-    BTN[5] = True
+        BTN[0] = False
+        BTN[1] = True
+        BTN[2] = True
+        BTN[3] = False
+        BTN[4] = True
+        BTN[5] = True
 
-    i=1
-    while (i < 9):
-        if (i<7):
-            aux = 'm' + str(i)
-            MEMORIA[MEMORIA.index(aux)+1] = valorExpressao(MEMORIA[MEMORIA.index(aux)+2],
-                                            BTN, LED, MEMORIA)
-        aux = 'l' + str(i)
-        if (LED[LED.index(aux)+2] != ("expressao") ):
-            LED[LED.index(aux)+1] = valorExpressao(LED[LED.index(aux)+2],
-                                            BTN, LED, MEMORIA)
-            #manda info pro arduino aqui mesmo LED(i) = (LED[LED.index(aux)+1])
-        i = i+1
+        i=1
+        while (i < 9):
+            print("teste")
+            if (i<7):
+                aux = 'm' + str(i)
+                MEMORIA[MEMORIA.index(aux)+1] = valorExpressao(MEMORIA[MEMORIA.index(aux)+2],
+                                                BTN, LED, MEMORIA)
+            aux = 'l' + str(i)
+            if (LED[LED.index(aux)+2] != ("expressao") ):
+                LED[LED.index(aux)+1] = valorExpressao(LED[LED.index(aux)+2],
+                                                BTN, LED, MEMORIA)
+                #manda info pro arduino aqui mesmo LED(i) = (LED[LED.index(aux)+1])
+                print(aux +":"+ LED[LED.index(aux)+1])
+            i = i+1
     # ============================================================================================================================================================================================================================================
     if event == sg.WIN_CLOSED or event == 'Cancel':
         break
