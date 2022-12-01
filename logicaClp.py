@@ -340,10 +340,10 @@ while True:
             aux = 'm' + str(i)
             if (MEMORIA[MEMORIA.index(aux)+2] != ("expressao") ):
                 maiorNivel = acharNivel(MEMORIA[MEMORIA.index(aux)+2])
-            if (maiorNivel == -1):
-                txt = "Entrada {} invalida."
-            MEMORIA[MEMORIA.index(aux)+2].append(':')
-            MEMORIA[MEMORIA.index(aux)+2].append(str(maiorNivel))
+                if (maiorNivel == -1):
+                    txt = "Entrada {} invalida."
+                MEMORIA[MEMORIA.index(aux)+2].append(':')
+                MEMORIA[MEMORIA.index(aux)+2].append(str(maiorNivel))
         i = i+1
 
     # loop modo run
