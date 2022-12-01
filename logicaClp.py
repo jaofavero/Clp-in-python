@@ -1,11 +1,16 @@
 import PySimpleGUI as sg
+sg.theme('SandyBeach')
+#DarkBrown7 PythonPlus SandyBeach
 # MODO PROGRAMAÇÃO-------------------------------------------------------------------------------------------------------
 
 def formatacao(expressao):
-    lista = []
-    lista[:] = expressao
-    lista = [j for j in lista if j.strip()]
-    return lista
+    if (expressao == ''):
+        return "expressao"
+    else:
+        lista = []
+        lista[:] = expressao
+        lista = [j for j in lista if j.strip()]
+        return lista
 
 
 def acharNivel(expressao):
@@ -283,7 +288,7 @@ dados = [
     [sg.Text('Memória 5:', size = (15,0)), sg.InputText(size = (20,1), key='m5')],
     [sg.Text('Memória 6:', size = (15,0)), sg.InputText(size = (20,1), key='m6')],
     [sg.Text('===========================================: ', size = (300,0))],
-    [sg.Text('LED 1:', size = (15,0)), sg.InputText(size = (20,1), key='l1')],
+    [sg.Text('LED 1:', size = (15,0)), sg.InputText(size = (20,1), key='l1') ],
     [sg.Text('LED 2:', size = (15,0)), sg.InputText(size = (20,1), key='l2')],
     [sg.Text('LED 3:', size = (15,0)), sg.InputText(size = (20,1), key='l3')],
     [sg.Text('LED 4:', size = (15,0)), sg.InputText(size = (20,1), key='l4')],
@@ -291,7 +296,7 @@ dados = [
     [sg.Text('LED 6:', size = (15,0)), sg.InputText(size = (20,1), key='l6')],
     [sg.Text('LED 7:', size = (15,0)), sg.InputText(size = (20,1), key='l7')],
     [sg.Text('LED 8:', size = (15,0)), sg.InputText(size = (20,1), key='l8')],
-    [sg.Button('Run', size=(15,0))]]       
+    [sg.Button('run', size=(15,0))]]       
 layout = [[sg.Column(dados,size = (400,505))]]
 window = sg.Window('CLP', layout)
 
@@ -322,11 +327,15 @@ while True:
         LED[LED.index('l6')+2] = formatacao(values['l6'])
         LED[LED.index('l7')+2] = formatacao(values['l7'])
         LED[LED.index('l8')+2] = formatacao(values['l8'])
-        # interface info-------------------------------------------------
+        #se campo vasio = []
+        # interface info-----   --------------------------------------------
+        #if LED[LED.index('l8')+2] == 
+        if LED[LED.index('l8')+2] == "":
+            print("teste")
+
         maiorNivel=0
         i=1
         while (i < 9):
-            print("teste")
             aux = 'l' + str(i)
             if (LED[LED.index(aux)+2] != ("expressao") ):
                 maiorNivel = acharNivel(LED[LED.index(aux)+2])
@@ -359,19 +368,20 @@ while True:
 
         i=1
         while (i < 9):
-            print("teste")
             if (i<7):
                 aux = 'm' + str(i)
-                MEMORIA[MEMORIA.index(aux)+1] = valorExpressao(MEMORIA[MEMORIA.index(aux)+2],
-                                                BTN, LED, MEMORIA)
+                if (MEMORIA[MEMORIA.index(aux)+2] != ("expressao") ):
+                    MEMORIA[MEMORIA.index(aux)+1] = valorExpressao(MEMORIA[MEMORIA.index(aux)+2],
+                                                    BTN, LED, MEMORIA)
+                    print(str(aux) +":"+ str(MEMORIA[MEMORIA.index(aux)+1]))
             aux = 'l' + str(i)
             if (LED[LED.index(aux)+2] != ("expressao") ):
                 LED[LED.index(aux)+1] = valorExpressao(LED[LED.index(aux)+2],
                                                 BTN, LED, MEMORIA)
                 #manda info pro arduino aqui mesmo LED(i) = (LED[LED.index(aux)+1])
-                print(aux +":"+ LED[LED.index(aux)+1])
+                print(str(aux) +":"+ str(LED[LED.index(aux)+1]))
             i = i+1
     # ============================================================================================================================================================================================================================================
     if event == sg.WIN_CLOSED or event == 'Cancel':
+        window.close()
         break
-    window.close()
