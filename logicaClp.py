@@ -297,6 +297,7 @@ dados = [
     [sg.Text('LED 7:', size = (15,0)), sg.InputText(size = (20,1), key='l7')],
     [sg.Text('LED 8:', size = (15,0)), sg.InputText(size = (20,1), key='l8')],
     [sg.Button('run', size=(15,0))]]       
+    [sg.Button('run', size=(15,0))]]       
 layout = [[sg.Column(dados,size = (400,505))]]
 window = sg.Window('CLP', layout)
 
@@ -328,16 +329,15 @@ while True:
         LED[LED.index('l7')+2] = formatacao(values['l7'])
         LED[LED.index('l8')+2] = formatacao(values['l8'])
         #se campo vasio = []
-        # interface info-----   --------------------------------------------
-        #if LED[LED.index('l8')+2] == 
-        if LED[LED.index('l8')+2] == "":
-            print("teste")
+        # interface info-------------------------------------------------
+    
 
         maiorNivel=0
         i=1
         while (i < 9):
             aux = 'l' + str(i)
-            if (LED[LED.index(aux)+2] != ("expressao") ):
+            if (LED[LED.index(aux)+2] != ("[]") ):
+                print("teste")
                 maiorNivel = acharNivel(LED[LED.index(aux)+2])
                 if (maiorNivel == -1):
                     txt = "Entrada {} invalida."
@@ -345,7 +345,7 @@ while True:
                 LED[LED.index(aux)+2].append(str(maiorNivel))
             if (i<7):
                 aux = 'm' + str(i)
-                if (MEMORIA[MEMORIA.index(aux)+2] != ("expressao") ):
+                if (MEMORIA[MEMORIA.index(aux)+2] != ("[]") ):
                     maiorNivel = acharNivel(MEMORIA[MEMORIA.index(aux)+2])
                     if (maiorNivel == -1):
                         txt = "Entrada {} invalida."
@@ -375,10 +375,11 @@ while True:
                                                     BTN, LED, MEMORIA)
                     print(str(aux) +":"+ str(MEMORIA[MEMORIA.index(aux)+1]))
             aux = 'l' + str(i)
-            if (LED[LED.index(aux)+2] != ("expressao") ):
+            if (LED[LED.index(aux)+2] != ("[]") ):
                 LED[LED.index(aux)+1] = valorExpressao(LED[LED.index(aux)+2],
                                                 BTN, LED, MEMORIA)
                 #manda info pro arduino aqui mesmo LED(i) = (LED[LED.index(aux)+1])
+                print(str(aux) +":"+ str(LED[LED.index(aux)+1]))
                 print(str(aux) +":"+ str(LED[LED.index(aux)+1]))
             i = i+1
     # ============================================================================================================================================================================================================================================
