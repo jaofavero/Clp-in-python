@@ -2,7 +2,26 @@ import PySimpleGUI as sg
 sg.theme('SandyBeach')
 # DarkBrown7 PythonPlus SandyBeach
 # MODO PROGRAMAÇÃO-------------------------------------------------------------------------------------------------------
-
+def organizaMemoria(expressao):
+    has = True
+    i = 0
+    isNumber = 0
+    j=0
+    while has:
+        if 'm' in expressao[i:]:
+            aux = expressao.index('m', i)
+            while j < 10:
+                if expressao[aux+2] == j:
+                    isNumber = isNumber+1
+                if isNumber != 0:
+                    aux = aux+1
+                    expressao[aux] = expressao[aux]+expressao[aux+1]
+                    expressao.pop(aux+1)
+                j = j+1
+        else:
+            has = False
+        i = i+1
+    return expressao
 
 def formatacao(expressao):
     if (expressao == ''):
@@ -11,6 +30,7 @@ def formatacao(expressao):
         lista = []
         lista[:] = expressao
         lista = [j for j in lista if j.strip()]
+        lista = organizaMemoria(lista)
         return lista
 
 def opAnd(a, b):
@@ -49,22 +69,22 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
         "\n\n\n\ninicio = (expressao[inicio:fim])"+str(expressao[inicio:fim]))
     # conferir conteudo ja checado o valor
   # Checar Memoria
- #   if 'm' in expressao[i:fim]:
-      #  aux = expressao[expressao.index('m', i)+1]
-     #   print(aux)
-       # aux = 'm' + aux
+    if 'm' in expressao[i:fim]:
+        aux = expressao[expressao.index('m', i)+1]
+        print(aux)
+        aux = 'm' + aux
       #  print("+3 " + str(MEMORIA[MEMORIA.index(aux)+3]))
      #   print("+2 " + str(MEMORIA[MEMORIA.index(aux)+2]))
     #    print("+1 " + str(MEMORIA[MEMORIA.index(aux)+1]))
    #     print("0 " + str(MEMORIA[MEMORIA.index(aux)]))
-  #      if ('expressao') in MEMORIA[MEMORIA.index(aux)+2]:
- #           return False
+        if ('expressao') in MEMORIA[MEMORIA.index(aux)+2]:
+            return False
  #       # Checar LED
-    #if 'l' in expressao[i:fim]:
-   #     aux = expressao[expressao.index('l', i)+1]
-  #      aux = 'l' + aux
- #       if ('expressao') in LED[LED.index(aux)+2]:
-#            return False
+    if 'l' in expressao[i:fim]:
+        aux = expressao[expressao.index('l', i)+1]
+        aux = 'l' + aux
+        if ('expressao') in LED[LED.index(aux)+2]:
+            return False
 
     if not ('+' in expressao[inicio:fim]):
         hasOr = False
@@ -243,7 +263,7 @@ while True:
     LED = ['l1', False, "expressao", 'l2', False, "expressao", 'l3', False, "expressao", 'l4', False, "expressao",
            'l5', False, "expressao", 'l6', False, "expressao", 'l7', False, "expressao", 'l8', False, "expressao"]
     MEMORIA = ['m1', False, "expressao", 'm2', False, "expressao", 'm3', False, "expressao",
-               'm4', False, "expressao", 'm5', False, "expressao", 'm6', False, "expressao"]
+               'm4', False, "expressao", 'm5', False, "expressao", 'm6', False, "expressao", 'm4', False, "expressao", 'm5', False, "expressao", 'm6', False, "expressao",'m7', False, "expressao", 'm8', False, "expressao", 'm9', False, "expressao",'m10', False, "expressao", 'm11', False, "expressao", 'm12', False, "expressao", 'm13', False, "expressao", 'm14', False, "expressao", 'm15', False, "expressao", 'm16', False, "expressao"]
     # ---------------------------------------------------------------
     # Modo codar
     event, values = window.read()
