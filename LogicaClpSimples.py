@@ -98,19 +98,8 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
         return expressao[inicioOp]
         
 
-    while hasAnd == True or hasOr == False:
-        #
-        if 'm' in expressao[i:final]:
-            aux = expressao[expressao.index('m', i)+1]
-            aux = 'm' + aux
-            if MEMORIA[MEMORIA.index(aux)+2] == ("expressao"):
-                return False
-        # Checar LED
-        if 'l' in expressao[i:final]:
-            aux = expressao[expressao.index('l', i)+1]
-            aux = 'l' + aux
-            if LED[LED.index(aux)+2] == ("expressao"):
-                return False
+    while hasAnd == True or hasOr == True:
+        print("aoba")
         #
         auxIndex = 0
         operacao = 0
@@ -123,13 +112,14 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
                 auxIndex = expressao.index('+')
                 operacao = 2
                 #i = expressao.index('+', i)
-            elif ('+' in expressao[inicio:final]):
-                auxIndex = expressao.index('+')
-                operacao = 2
-                #i = expressao.index('+', i)
-            elif ('*' in expressao[inicio:final]):
-                auxIndex = expressao.index('*')
-                operacao = 1
+        elif ('+' in expressao[inicio:final]):
+            print("entrou")
+            auxIndex = expressao.index('+')
+            operacao = 2
+            #i = expressao.index('+', i)
+        elif ('*' in expressao[inicio:final]):
+            auxIndex = expressao.index('*')
+            operacao = 1
                 #i = expressao.index('*', i)
         if (operacao != 0):
             print("\n\n\nentrou operação")
@@ -165,7 +155,7 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
                 b = BTN[int(expressao[auxIndex+2])-1]
 
             # checar o que vem antes
-
+            print("check")
             if expressao[auxIndex-1] == True or expressao[auxIndex-1] == False:
                 a = expressao[auxIndex-1]
 
@@ -182,8 +172,10 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
                 a = opNot(a)
             if (operacao == 1):
                 auxBool = opAnd(a, b)
+                print(auxBool)
             if (operacao == 2):
                 auxBool = opOr(a, b)
+                print(auxBool)
             expressao[inicioOp] = auxBool
             del expressao[(inicioOp+1):finalOp]
 
@@ -194,6 +186,7 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
         i = i + 1
     if (expressao[inicio-1]) == '!':
         expressao[inicioOp] = opNot(expressao[inicioOp])
+    print("teste")
     return expressao[inicioOp]
 def valorExpressao(expressao, BTN, LED, MEMORIA):
     if not 'expressao' in expressao:
