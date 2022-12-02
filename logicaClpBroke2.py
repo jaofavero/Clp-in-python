@@ -2,7 +2,15 @@ import PySimpleGUI as sg
 sg.theme('SandyBeach')
 # DarkBrown7 PythonPlus SandyBeach
 # MODO PROGRAMAÇÃO-------------------------------------------------------------------------------------------------------
-
+def getIndex(expressao, num):
+  count = 0
+  count2 =0
+  for i in expressao:
+    if i == '(':
+        if count == num-1:
+            return count2
+        count += 1
+        count2 += 1
 
 def formatacao(expressao):
     if (expressao == ''):
@@ -13,7 +21,9 @@ def formatacao(expressao):
         lista = [j for j in lista if j.strip()]
         return lista
 
-
+"""def fakeRindex(expressao, posicao):
+        str(expressao).rindex('(',i)
+    return posicao"""
 def acharNivel(expressao):
     maiorNivel = 0
     nivel = 0
@@ -277,7 +287,9 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
 
 def valorExpressao(expressao, BTN, LED, MEMORIA):
     if ':' in expressao:
-        maiorNivel = int(expressao[expressao.index(':')+1])
+        maiorNivel = (expressao[expressao.index(':')+1])
+        print(maiorNivel)
+        maiorNivel = int(maiorNivel)
         inicio = 0
         fim = 0
         aux = 0
@@ -286,7 +298,7 @@ def valorExpressao(expressao, BTN, LED, MEMORIA):
         hasAbre = True
         hasFecha = True
         while hasAbre or hasFecha:
-            if maiorNivel == 1 and aux < 0:
+            """"if maiorNivel == 1 and aux < 0:
                 print("entro aqui")
                 inicio = expressao.index('(')
                 fim = expressao.index(')')+1
@@ -294,11 +306,12 @@ def valorExpressao(expressao, BTN, LED, MEMORIA):
                     expressao, fim, inicio, BTN, LED, MEMORIA)
                 expressao[inicio] = auxBool
                 del expressao[(inicio+1):fim]
-                return expressao[inicio]
+                return expressao[inicio]"""
+            teste = 0
             if (nivel == maiorNivel):
                 print(str(maiorNivel))
-                inicio = int(expressao.index('('))
-                fim = int(expressao.index(')')+1)
+                inicio = int(getIndex(expressao, maiorNivel)) #ta pegando o valor errado
+                fim = int(expressao.index(')',inicio)+1)
                 auxBool = entreParenteses(
                     expressao, fim, inicio, BTN, LED, MEMORIA)
                 expressao[inicio] = auxBool
@@ -309,6 +322,8 @@ def valorExpressao(expressao, BTN, LED, MEMORIA):
             if ('(' in expressao[i:] and ')' in expressao[i:]):
                 if (expressao.index('(', i) < expressao.index(')', i)):
                     nivel = nivel + 1
+                    if (nivel < maiorNivel):
+                        teste=i
                     i = expressao.index('(', i)
                 if (expressao.index('(', i) > expressao.index(')', i)):
                     nivel = nivel - 1
