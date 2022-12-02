@@ -174,7 +174,7 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
             expressao[inicioOp] = opNot(expressao[inicioOp])
         return expressao[inicioOp]
 
-    while hasAnd or hasOr:
+    while hasAnd == True or hasOr == True:
         #
         if 'm' in expressao[i:final]:
             aux = expressao[expressao.index('m', i)+1]

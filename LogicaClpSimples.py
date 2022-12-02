@@ -54,7 +54,7 @@ def opNot(a):
         return True
 
 def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
-    print("\n\n\n\nentro função")
+    #print("\n\n\n\nentro função")
     a = False
     b = False
     hasAnd = True
@@ -65,8 +65,8 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
     i = inicio
     final = fim
     inicioOp = inicio+1
-    print(
-        "\n\n\n\ninicio = (expressao[inicio:fim])"+str(expressao[inicio:fim]))
+   #print(
+   #     "\n\n\n\ninicio = (expressao[inicio:fim])"+str(expressao[inicio:fim]))
     # conferir conteudo ja checado o valor
   # Checar Memoria
     if 'm' in expressao[i:fim]:
@@ -92,7 +92,7 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
         hasAnd = False
 
     if not ('+' in expressao[inicio:fim]) and not ('*' in expressao[inicio:fim]):
-        print("entrou")
+  #      print("entrou")
         auxIndex = inicio
         if expressao[auxIndex+1] == "!":
             notUnico = True
@@ -102,9 +102,9 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
         elif expressao[auxIndex+1] == 'm':
             aux = 'm' + expressao[auxIndex+2]
             auxBool = MEMORIA[MEMORIA.index(aux)+1]
-            print(str(auxBool))
+ #           print(str(auxBool))
         elif expressao[auxIndex+1] == 'l':
-            print("entrou aqui")
+#
             aux = 'l' + expressao[auxIndex+2]
             auxBool = LED[LED.index(aux)+1]
         elif expressao[auxIndex+1] == 'b':
@@ -119,7 +119,6 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
         
 
     while hasAnd == True or hasOr == True:
-        print("aoba")
         #
         auxIndex = 0
         operacao = 0
@@ -133,7 +132,7 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
                 operacao = 2
                 #i = expressao.index('+', i)
         elif ('+' in expressao[inicio:final]):
-            print("entrou")
+         #   print("entrou")
             auxIndex = expressao.index('+')
             operacao = 2
             #i = expressao.index('+', i)
@@ -142,7 +141,7 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
             operacao = 1
                 #i = expressao.index('*', i)
         if (operacao != 0):
-            print("\n\n\nentrou operação")
+        #    print("\n\n\nentrou operação")
             # not na frente
             finalOp = auxIndex+3
 
@@ -175,7 +174,7 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
                 b = BTN[int(expressao[auxIndex+2])-1]
 
             # checar o que vem antes
-            print("check")
+           # print("check")
             if expressao[auxIndex-1] == True or expressao[auxIndex-1] == False:
                 a = expressao[auxIndex-1]
 
@@ -192,10 +191,10 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
                 a = opNot(a)
             if (operacao == 1):
                 auxBool = opAnd(a, b)
-                print(auxBool)
+          #      print(auxBool)
             if (operacao == 2):
                 auxBool = opOr(a, b)
-                print(auxBool)
+     #           print(auxBool)
             expressao[inicioOp] = auxBool
             del expressao[(inicioOp+1):finalOp]
 
@@ -206,7 +205,7 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
         i = i + 1
     if (expressao[inicio-1]) == '!':
         expressao[inicioOp] = opNot(expressao[inicioOp])
-    print("teste")
+   # print("teste")
     return expressao[inicioOp]
 def valorExpressao(expressao, BTN, LED, MEMORIA):
     if not 'expressao' in expressao:
@@ -232,6 +231,16 @@ BTN = [False, False, False, False, False, False, False, False]
 # front-end -----------------------------------------------------
 dados = [
 
+    [sg.Text('================================================= ', size=(300, 0))],
+    [sg.Text('LED 1:', size=(15, 0)), sg.InputText(size=(40, 1), key='l1')],
+    [sg.Text('LED 2:', size=(15, 0)), sg.InputText(size=(40, 1), key='l2')],
+    [sg.Text('LED 3:', size=(15, 0)), sg.InputText(size=(40, 1), key='l3')],
+    [sg.Text('LED 4:', size=(15, 0)), sg.InputText(size=(40, 1), key='l4')],
+    [sg.Text('LED 5:', size=(15, 0)), sg.InputText(size=(40, 1), key='l5')],
+    [sg.Text('LED 6:', size=(15, 0)), sg.InputText(size=(40, 1), key='l6')],
+    [sg.Text('LED 7:', size=(15, 0)), sg.InputText(size=(40, 1), key='l7')],
+    [sg.Text('LED 8:', size=(15, 0)), sg.InputText(size=(40, 1), key='l8')],
+    [sg.Text('================================================= ', size=(300, 0))],
     [sg.Text('Memória 1:', size=(15, 0)),
      sg.InputText(size=(40, 1), key='m1')],
     [sg.Text('Memória 2:', size=(15, 0)),
@@ -244,17 +253,28 @@ dados = [
      sg.InputText(size=(40, 1), key='m5')],
     [sg.Text('Memória 6:', size=(15, 0)),
      sg.InputText(size=(40, 1), key='m6')],
-    [sg.Text('===========================================: ', size=(300, 0))],
-    [sg.Text('LED 1:', size=(15, 0)), sg.InputText(size=(40, 1), key='l1')],
-    [sg.Text('LED 2:', size=(15, 0)), sg.InputText(size=(40, 1), key='l2')],
-    [sg.Text('LED 3:', size=(15, 0)), sg.InputText(size=(40, 1), key='l3')],
-    [sg.Text('LED 4:', size=(15, 0)), sg.InputText(size=(40, 1), key='l4')],
-    [sg.Text('LED 5:', size=(15, 0)), sg.InputText(size=(40, 1), key='l5')],
-    [sg.Text('LED 6:', size=(15, 0)), sg.InputText(size=(40, 1), key='l6')],
-    [sg.Text('LED 7:', size=(15, 0)), sg.InputText(size=(40, 1), key='l7')],
-    [sg.Text('LED 8:', size=(15, 0)), sg.InputText(size=(40, 1), key='l8')],
+    [sg.Text('Memória 7:', size=(15, 0)),
+     sg.InputText(size=(40, 1), key='m7')],
+    [sg.Text('Memória 8:', size=(15, 0)),
+     sg.InputText(size=(40, 1), key='m8')],
+    [sg.Text('Memória 9:', size=(15, 0)),
+     sg.InputText(size=(40, 1), key='m9')],
+    [sg.Text('Memória 10:', size=(15, 0)),
+     sg.InputText(size=(40, 1), key='m10')],
+    [sg.Text('Memória 11:', size=(15, 0)),
+     sg.InputText(size=(40, 1), key='m11')],
+    [sg.Text('Memória 12:', size=(15, 0)),
+     sg.InputText(size=(40, 1), key='m12')],
+    [sg.Text('Memória 13:', size=(15, 0)),
+     sg.InputText(size=(40, 1), key='m13')],
+    [sg.Text('Memória 14:', size=(15, 0)),
+     sg.InputText(size=(40, 1), key='m14')],
+    [sg.Text('Memória 15:', size=(15, 0)),
+     sg.InputText(size=(40, 1), key='m15')],
+    [sg.Text('Memória 16:', size=(15, 0)),
+     sg.InputText(size=(40, 1), key='m16')],
     [sg.Button('run', size=(15, 0))]]
-layout = [[sg.Column(dados, size=(400, 505))]]
+layout = [[sg.Column(dados, size=(400, 800))]]
 window = sg.Window('CLP', layout)
 
 
@@ -268,12 +288,6 @@ while True:
     # Modo codar
     event, values = window.read()
     if event == 'run':
-        MEMORIA[MEMORIA.index('m1')+2] = formatacao(values['m1'])
-        MEMORIA[MEMORIA.index('m2')+2] = formatacao(values['m2'])
-        MEMORIA[MEMORIA.index('m3')+2] = formatacao(values['m3'])
-        MEMORIA[MEMORIA.index('m4')+2] = formatacao(values['m4'])
-        MEMORIA[MEMORIA.index('m5')+2] = formatacao(values['m5'])
-        MEMORIA[MEMORIA.index('m6')+2] = formatacao(values['m6'])
         LED[LED.index('l1')+2] = formatacao(values['l1'])
         LED[LED.index('l2')+2] = formatacao(values['l2'])
         LED[LED.index('l3')+2] = formatacao(values['l3'])
@@ -282,6 +296,23 @@ while True:
         LED[LED.index('l6')+2] = formatacao(values['l6'])
         LED[LED.index('l7')+2] = formatacao(values['l7'])
         LED[LED.index('l8')+2] = formatacao(values['l8'])
+        MEMORIA[MEMORIA.index('m1')+2] = formatacao(values['m1'])
+        MEMORIA[MEMORIA.index('m2')+2] = formatacao(values['m2'])
+        MEMORIA[MEMORIA.index('m3')+2] = formatacao(values['m3'])
+        MEMORIA[MEMORIA.index('m4')+2] = formatacao(values['m4'])
+        MEMORIA[MEMORIA.index('m5')+2] = formatacao(values['m5'])
+        MEMORIA[MEMORIA.index('m6')+2] = formatacao(values['m6'])
+        MEMORIA[MEMORIA.index('m7')+2] = formatacao(values['m7'])
+        MEMORIA[MEMORIA.index('m8')+2] = formatacao(values['m8'])
+        MEMORIA[MEMORIA.index('m9')+2] = formatacao(values['m9'])
+        MEMORIA[MEMORIA.index('m10')+2] = formatacao(values['m10'])
+        MEMORIA[MEMORIA.index('m11')+2] = formatacao(values['m11'])
+        MEMORIA[MEMORIA.index('m12')+2] = formatacao(values['m12'])
+        MEMORIA[MEMORIA.index('m13')+2] = formatacao(values['m13'])
+        MEMORIA[MEMORIA.index('m14')+2] = formatacao(values['m14'])
+        MEMORIA[MEMORIA.index('m15')+2] = formatacao(values['m15'])
+        MEMORIA[MEMORIA.index('m16')+2] = formatacao(values['m16'])
+
         # se campo vasio = []
         # interface info-------------------------------------------------
         # loop modo run
@@ -294,21 +325,21 @@ while True:
         BTN[3] = False
         BTN[4] = True
         BTN[5] = True
-
+        BTN[6] = False
+        BTN[7] = True
         i = 1
-        while (i < 9):
-            if (i < 7):
-                aux = 'm' + str(i)
-                if (MEMORIA[MEMORIA.index(aux)+2] != ("expressao")):
-                    MEMORIA[MEMORIA.index(aux)+1] = valorExpressao(MEMORIA[MEMORIA.index(aux)+2],
-                                                                   BTN, LED, MEMORIA)
-                    print(str(aux) + ":" + str(MEMORIA[MEMORIA.index(aux)+1]))
-            aux = 'l' + str(i)
-            if (LED[LED.index(aux)+2] != ("expressao")):
-                LED[LED.index(aux)+1] = valorExpressao(LED[LED.index(aux)+2],
-                                                       BTN, LED, MEMORIA)
-                # manda info pro arduino aqui mesmo LED(i) = (LED[LED.index(aux)+1])
-                print(str(aux) + ":" + str(LED[LED.index(aux)+1]))
+        while (i < 17):
+            aux = 'm' + str(i)
+            if (MEMORIA[MEMORIA.index(aux)+2] != ("expressao")):
+                MEMORIA[MEMORIA.index(aux)+1] = valorExpressao(MEMORIA[MEMORIA.index(aux)+2], BTN, LED, MEMORIA)
+                print(str(aux) + ":" + str(MEMORIA[MEMORIA.index(aux)+1]))
+            if (i < 9):
+                aux = 'l' + str(i)
+                if (LED[LED.index(aux)+2] != ("expressao")):
+                    LED[LED.index(aux)+1] = valorExpressao(LED[LED.index(aux)+2],
+                                                        BTN, LED, MEMORIA)
+                    # manda info pro arduino aqui mesmo LED(i) = (LED[LED.index(aux)+1])
+                    print(str(aux) + ":" + str(LED[LED.index(aux)+1]))
             i = i+1
     # ============================================================================================================================================================================================================================================
     if event == sg.WIN_CLOSED or event == 'Cancel':
