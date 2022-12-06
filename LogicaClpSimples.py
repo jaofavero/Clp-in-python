@@ -1,4 +1,11 @@
 import PySimpleGUI as sg
+import serial
+
+
+porta = "COM10"
+velocidade = 9600
+conecao = serial.Serial (porta, velocidade);
+
 sg.theme('DarkBlue2')
 # DarkBrown7 PythonPlus SandyBeach
 # MODO PROGRAMAÇÃO-------------------------------------------------------------------------------------------------------
@@ -310,20 +317,27 @@ while True:
                 LED = verifica
             elif (verifica[0] == 'm1'):
                 MEMORIA = verifica
+        codig = str(conecao.readline())
+        if codig == 'b1':
+            BTN[0] = True
+        if codig == 'b2':
+            BTN[1] = True
+        if codig == 'b3':
+            BTN[2] = True
+        if codig == 'b4':
+            BTN[3] = True
+        if codig == 'b5':
+            BTN[4] = True
+        if codig == 'b6':
+            BTN[5] = True
+        if codig == 'b7':
+            BTN[6] = True
+        if codig == 'b8':
+            BTN[0] = True
         # # # # se campo vasio = []
         # interface info-------------------------------------------------
         # loop modo run
 
-        # while run:
-
-        BTN[0] = True
-        BTN[1] = True
-        BTN[2] = True
-        BTN[3] = False
-        BTN[4] = True
-        BTN[5] = True
-        BTN[6] = False
-        BTN[7] = True
         i = 1
         while (i < 17):
             aux = 'm' + str(i)
