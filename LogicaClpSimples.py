@@ -1,5 +1,5 @@
 import PySimpleGUI as sg
-sg.theme('SandyBeach')
+sg.theme('DarkBlue2')
 # DarkBrown7 PythonPlus SandyBeach
 # MODO PROGRAMAÇÃO-------------------------------------------------------------------------------------------------------
 
@@ -259,51 +259,13 @@ BTN = [False, False, False, False, False, False, False, False]
 
 # front-end -----------------------------------------------------
 dados = [
-
-    [sg.Text('================================================= ', size=(300, 0))],
-    [sg.Text('LED 1:', size=(15, 0)), sg.InputText(size=(40, 1), key='l1')],
-    [sg.Text('LED 2:', size=(15, 0)), sg.InputText(size=(40, 1), key='l2')],
-    [sg.Text('LED 3:', size=(15, 0)), sg.InputText(size=(40, 1), key='l3')],
-    [sg.Text('LED 4:', size=(15, 0)), sg.InputText(size=(40, 1), key='l4')],
-    [sg.Text('LED 5:', size=(15, 0)), sg.InputText(size=(40, 1), key='l5')],
-    [sg.Text('LED 6:', size=(15, 0)), sg.InputText(size=(40, 1), key='l6')],
-    [sg.Text('LED 7:', size=(15, 0)), sg.InputText(size=(40, 1), key='l7')],
-    [sg.Text('LED 8:', size=(15, 0)), sg.InputText(size=(40, 1), key='l8')],
-    [sg.Text('================================================= ', size=(300, 0))],
-    [sg.Text('Memória 1:', size=(15, 0)),
-     sg.InputText(size=(40, 1), key='m1')],
-    [sg.Text('Memória 2:', size=(15, 0)),
-     sg.InputText(size=(40, 1), key='m2')],
-    [sg.Text('Memória 3:', size=(15, 0)),
-     sg.InputText(size=(40, 1), key='m3')],
-    [sg.Text('Memória 4:', size=(15, 0)),
-     sg.InputText(size=(40, 1), key='m4')],
-    [sg.Text('Memória 5:', size=(15, 0)),
-     sg.InputText(size=(40, 1), key='m5')],
-    [sg.Text('Memória 6:', size=(15, 0)),
-     sg.InputText(size=(40, 1), key='m6')],
-    [sg.Text('Memória 7:', size=(15, 0)),
-     sg.InputText(size=(40, 1), key='m7')],
-    [sg.Text('Memória 8:', size=(15, 0)),
-     sg.InputText(size=(40, 1), key='m8')],
-    [sg.Text('Memória 9:', size=(15, 0)),
-     sg.InputText(size=(40, 1), key='m9')],
-    [sg.Text('Memória 10:', size=(15, 0)),
-     sg.InputText(size=(40, 1), key='m10')],
-    [sg.Text('Memória 11:', size=(15, 0)),
-     sg.InputText(size=(40, 1), key='m11')],
-    [sg.Text('Memória 12:', size=(15, 0)),
-     sg.InputText(size=(40, 1), key='m12')],
-    [sg.Text('Memória 13:', size=(15, 0)),
-     sg.InputText(size=(40, 1), key='m13')],
-    [sg.Text('Memória 14:', size=(15, 0)),
-     sg.InputText(size=(40, 1), key='m14')],
-    [sg.Text('Memória 15:', size=(15, 0)),
-     sg.InputText(size=(40, 1), key='m15')],
-    [sg.Text('Memória 16:', size=(15, 0)),
-     sg.InputText(size=(40, 1), key='m16')],
-    [sg.Button('run', size=(15, 0))]]
-layout = [[sg.Column(dados, size=(400, 800))]]
+    [sg.Text('=========================================',size=(300, 0))],
+    [sg.Text('Text:', size=(15, 0))],
+    [sg.Multiline(size=(45, 20),key='mult')],
+    [sg.Text('Digite somente o nome do arquivo', size=(25, 0))],
+    [sg.Text('Filename', size=(7, 0)),sg.Input(size=(22, 1),key='dir'), sg.FileBrowse(size=(10, 1))], 
+    [sg.Button('run', size=(15, 0)),sg.Button('Save',size=(10, 0)),sg.Button('Carregar',size=(10, 0))]]
+layout = [[sg.Column(dados, size=(350, 500))]]
 window = sg.Window('CLP', layout)
 
 
@@ -316,41 +278,39 @@ while True:
     # ---------------------------------------------------------------
     # Modo codar
     event, values = window.read()
+    if event == 'Carregar':
+        diretorio = values['dir']
+        arquivo = open(diretorio,'r', encoding="UTF-8")
+
+        for linha in arquivo:
+            linha = linha.rstrip()
+            window['mult'].print(linha)
+        arquivo.close()
+
+    if event == 'Save':
+        
+        arquivo = open('arq01.txt','w',encoding="UTF-8")
+        textField = values['mult']
+        print(textField)
+        arquivo.write(textField)
+
+
     if event == 'run':
-        LED[LED.index('l1')+2] = formatacao(values['l1'])
-        LED[LED.index('l2')+2] = formatacao(values['l2'])
-        LED[LED.index('l3')+2] = formatacao(values['l3'])
-        LED[LED.index('l4')+2] = formatacao(values['l4'])
-        LED[LED.index('l5')+2] = formatacao(values['l5'])
-        LED[LED.index('l6')+2] = formatacao(values['l6'])
-        LED[LED.index('l7')+2] = formatacao(values['l7'])
-        LED[LED.index('l8')+2] = formatacao(values['l8'])
-        MEMORIA[MEMORIA.index('m1')+2] = formatacao(values['m1'])
-        MEMORIA[MEMORIA.index('m2')+2] = formatacao(values['m2'])
-        MEMORIA[MEMORIA.index('m3')+2] = formatacao(values['m3'])
-        MEMORIA[MEMORIA.index('m4')+2] = formatacao(values['m4'])
-        MEMORIA[MEMORIA.index('m5')+2] = formatacao(values['m5'])
-        MEMORIA[MEMORIA.index('m6')+2] = formatacao(values['m6'])
-        MEMORIA[MEMORIA.index('m7')+2] = formatacao(values['m7'])
-        MEMORIA[MEMORIA.index('m8')+2] = formatacao(values['m8'])
-        MEMORIA[MEMORIA.index('m9')+2] = formatacao(values['m9'])
-        MEMORIA[MEMORIA.index('m10')+2] = formatacao(values['m10'])
-        MEMORIA[MEMORIA.index('m11')+2] = formatacao(values['m11'])
-        MEMORIA[MEMORIA.index('m12')+2] = formatacao(values['m12'])
-        MEMORIA[MEMORIA.index('m13')+2] = formatacao(values['m13'])
-        MEMORIA[MEMORIA.index('m14')+2] = formatacao(values['m14'])
-        MEMORIA[MEMORIA.index('m15')+2] = formatacao(values['m15'])
-        MEMORIA[MEMORIA.index('m16')+2] = formatacao(values['m16'])
+        #LED[LED.index('l1')+2] = formatacao(values['l1'])
+
+        textField = values['mult']
+        print(textField)
+
         textField.split("\n") # sendo text field o que pegou do front
         for k in textField:
-            verifica = separaEquacao(textField[i], LED, MEMORIA)
+            verifica = separaEquacao(textField[k], LED, MEMORIA)
             if (verifica == "Invalido"):
                 print("Invalido")
             elif (verifica[0] == 'l1'):
                 LED = verifica
             elif (verifica[0] == 'm1'):
                 MEMORIA = verifica
-        # se campo vasio = []
+        # # # # se campo vasio = []
         # interface info-------------------------------------------------
         # loop modo run
 
@@ -382,3 +342,45 @@ while True:
     if event == sg.WIN_CLOSED or event == 'Cancel':
         window.close()
         break
+
+
+
+# [sg.Text('LED 2:', size=(15, 0)), sg.InputText(size=(40, 1), key='l2')],
+    # [sg.Text('LED 3:', size=(15, 0)), sg.InputText(size=(40, 1), key='l3')],
+    # [sg.Text('LED 4:', size=(15, 0)), sg.InputText(size=(40, 1), key='l4')],
+    # [sg.Text('LED 5:', size=(15, 0)), sg.InputText(size=(40, 1), key='l5')],
+    # [sg.Text('LED 6:', size=(15, 0)), sg.InputText(size=(40, 1), key='l6')],
+    # [sg.Text('LED 7:', size=(15, 0)), sg.InputText(size=(40, 1), key='l7')],
+    # [sg.Text('LED 8:', size=(15, 0)), sg.InputText(size=(40, 1), key='l8')],
+    # [sg.Text('================================================= ', size=(300, 0))],
+    # [sg.Text('Memória 1:', size=(15, 0)),
+    #  sg.InputText(size=(40, 1), key='m1')],
+    # [sg.Text('Memória 2:', size=(15, 0)),
+    #  sg.InputText(size=(40, 1), key='m2')],
+    # [sg.Text('Memória 3:', size=(15, 0)),
+    #  sg.InputText(size=(40, 1), key='m3')],
+    # [sg.Text('Memória 4:', size=(15, 0)),
+    #  sg.InputText(size=(40, 1), key='m4')],
+    # [sg.Text('Memória 5:', size=(15, 0)),
+    #  sg.InputText(size=(40, 1), key='m5')],
+    # [sg.Text('Memória 6:', size=(15, 0)),
+    #  sg.InputText(size=(40, 1), key='m6')],
+    # [sg.Text('Memória 7:', size=(15, 0)),
+    #  sg.InputText(size=(40, 1), key='m7')],
+    # [sg.Text('Memória 8:', size=(15, 0)),
+    #  sg.InputText(size=(40, 1), key='m8')],
+    # [sg.Text('Memória 9:', size=(15, 0)),
+    #  sg.InputText(size=(40, 1), key='m9')],
+    # [sg.Text('Memória 10:', size=(15, 0)),
+    #  sg.InputText(size=(40, 1), key='m10')],
+    # [sg.Text('Memória 11:', size=(15, 0)),
+    #  sg.InputText(size=(40, 1), key='m11')],
+    # [sg.Text('Memória 12:', size=(15, 0)),
+    #  sg.InputText(size=(40, 1), key='m12')],
+    # [sg.Text('Memória 13:', size=(15, 0)),
+    #  sg.InputText(size=(40, 1), key='m13')],
+    # [sg.Text('Memória 14:', size=(15, 0)),
+    #  sg.InputText(size=(40, 1), key='m14')],
+    # [sg.Text('Memória 15:', size=(15, 0)),
+    #  sg.InputText(size=(40, 1), key='m15')],
+    # [sg.Text('Memória 16:', size=(15, 0)),sg.InputText(size=(40, 1), key='m16')],
