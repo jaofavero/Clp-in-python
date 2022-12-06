@@ -341,7 +341,7 @@ while True:
         MEMORIA[MEMORIA.index('m14')+2] = formatacao(values['m14'])
         MEMORIA[MEMORIA.index('m15')+2] = formatacao(values['m15'])
         MEMORIA[MEMORIA.index('m16')+2] = formatacao(values['m16'])
-        #CHAMAR separaEquacao(linha, LED, MEMORIA): mandando linha no textField usar textField.split("\n") e ve se funciona
+        textField.split("\n") # sendo text field o que pegou do front
         for k in textField:
             verifica = separaEquacao(textField[i], LED, MEMORIA)
             if (verifica == "Invalido"):
