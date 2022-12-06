@@ -1,5 +1,5 @@
 import PySimpleGUI as sg
-import serial
+
 
 
 porta = "COM10"
@@ -11,17 +11,18 @@ sg.theme('DarkBlue2')
 # MODO PROGRAMAÇÃO-------------------------------------------------------------------------------------------------------
 
 def separaEquacao(linha, LED, MEMORIA):
+    print(linha)
     aux=0
     aux2 = 0
     divisoria = linha.index('=')
     if 'l' in linha[:divisoria]:
-        aux = linha[linha.index('l', i)+1]
+        aux = linha[linha.index('l')+1]
         aux = 'l' + str(aux)
         aux2 = LED.index(aux)+2
         LED[aux2] = formatacao(linha[divisoria:])
         return LED
     if 'm' in linha[:divisoria]:
-        aux = linha[linha.index('m', i)+1]
+        aux = linha[linha.index('m')+1]
         while j < 10:
                 if linha[aux+1] == j:
                     isNumber = isNumber+1
@@ -304,22 +305,27 @@ while True:
 
     if event == 'run':
         #LED[LED.index('l1')+2] = formatacao(values['l1'])
-
+        
         textField = values['mult']
         print(textField)
-
-        textField.split("\n") # sendo text field o que pegou do front
-        for k in textField:
-            verifica = separaEquacao(textField[k], LED, MEMORIA)
+        k=0
+        listaAux = textField.split("\n") # sendo text field o que pegou do front
+        print(listaAux)
+        for line in listaAux:
+            verifica = separaEquacao(listaAux[k], LED, MEMORIA)
             if (verifica == "Invalido"):
                 print("Invalido")
             elif (verifica[0] == 'l1'):
                 LED = verifica
             elif (verifica[0] == 'm1'):
                 MEMORIA = verifica
+            k=k+1
         codig = str(conecao.readline())
         if codig == 'b1':
-            BTN[0] = True
+            if(BTN[0] == True):
+                BTN[0] = False
+            else:
+                BTN[0] = True
         if codig == 'b2':
             BTN[1] = True
         if codig == 'b3':
