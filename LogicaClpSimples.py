@@ -2,6 +2,35 @@ import PySimpleGUI as sg
 sg.theme('SandyBeach')
 # DarkBrown7 PythonPlus SandyBeach
 # MODO PROGRAMAÇÃO-------------------------------------------------------------------------------------------------------
+
+def separaEquacao(linha, LED, MEMORIA):
+    aux=0
+    aux2 = 0
+    divisoria = linha.index('=')
+    if 'l' in linha[:divisoria]:
+        aux = linha[linha.index('l', i)+1]
+        aux = 'l' + str(aux)
+        aux2 = LED.index(aux)+2
+        LED[aux2] = formatacao(linha[divisoria:])
+        return LED
+    if 'm' in linha[:divisoria]:
+        aux = linha[linha.index('m', i)+1]
+        while j < 10:
+                if linha[aux+1] == j:
+                    isNumber = isNumber+1
+                if isNumber != 0:
+                    linha[aux] = linha[aux]+linha[aux+1]
+                    linha.pop(aux+1)
+                j = j+1
+        aux = 'm' + str(aux)
+        aux2 = MEMORIA.index(aux)+2
+        MEMORIA[aux2] = formatacao(linha[divisoria:])
+        return MEMORIA
+    return "Invalido"
+
+
+
+
 def organizaMemoria(expressao):
     has = True
     i = 0
@@ -312,7 +341,15 @@ while True:
         MEMORIA[MEMORIA.index('m14')+2] = formatacao(values['m14'])
         MEMORIA[MEMORIA.index('m15')+2] = formatacao(values['m15'])
         MEMORIA[MEMORIA.index('m16')+2] = formatacao(values['m16'])
-
+        #CHAMAR separaEquacao(linha, LED, MEMORIA): mandando linha no textField usar textField.split("\n") e ve se funciona
+        for k in textField:
+            verifica = separaEquacao(textField[i], LED, MEMORIA)
+            if (verifica == "Invalido"):
+                print("Invalido")
+            elif (verifica[0] == 'l1'):
+                LED = verifica
+            elif (verifica[0] == 'm1'):
+                MEMORIA = verifica
         # se campo vasio = []
         # interface info-------------------------------------------------
         # loop modo run
