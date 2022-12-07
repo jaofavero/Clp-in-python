@@ -1,10 +1,10 @@
 import PySimpleGUI as sg
+import serial
 
 
-
-porta = "COM10"
-velocidade = 9600
-conecao = serial.Serial (porta, velocidade);
+#  porta = "COM10"
+#  velocidade = 9600
+#  conecao = serial.Serial (porta, velocidade)
 
 sg.theme('DarkBlue2')
 # DarkBrown7 PythonPlus SandyBeach
@@ -21,14 +21,20 @@ def separaEquacao(linha, LED, MEMORIA):
         aux2 = LED.index(aux)+2
         LED[aux2] = formatacao(linha[divisoria:])
         return LED
+    aux=0
+    aux2 = 0
+    aux3 = 0
     if 'm' in linha[:divisoria]:
+        isNumber=0
         aux = linha[linha.index('m')+1]
+        j=0
+        aux3 = int(aux)+1
         while j < 10:
-                if linha[aux+1] == j:
+                if linha[aux3] == j:
                     isNumber = isNumber+1
                 if isNumber != 0:
-                    linha[aux] = linha[aux]+linha[aux+1]
-                    linha.pop(aux+1)
+                    linha[aux] = linha[aux]+linha[aux3]
+                    linha.pop(aux3)
                 j = j+1
         aux = 'm' + str(aux)
         aux2 = MEMORIA.index(aux)+2
@@ -307,10 +313,10 @@ while True:
         #LED[LED.index('l1')+2] = formatacao(values['l1'])
         
         textField = values['mult']
-        print(textField)
+        #print(textField)
         k=0
         listaAux = textField.split("\n") # sendo text field o que pegou do front
-        print(listaAux)
+        #print(listaAux)
         for line in listaAux:
             verifica = separaEquacao(listaAux[k], LED, MEMORIA)
             if (verifica == "Invalido"):
@@ -320,30 +326,53 @@ while True:
             elif (verifica[0] == 'm1'):
                 MEMORIA = verifica
             k=k+1
-        codig = str(conecao.readline())
-        if codig == 'b1':
-            if(BTN[0] == True):
-                BTN[0] = False
-            else:
-                BTN[0] = True
-        if codig == 'b2':
-            BTN[1] = True
-        if codig == 'b3':
-            BTN[2] = True
-        if codig == 'b4':
-            BTN[3] = True
-        if codig == 'b5':
-            BTN[4] = True
-        if codig == 'b6':
-            BTN[5] = True
-        if codig == 'b7':
-            BTN[6] = True
-        if codig == 'b8':
-            BTN[0] = True
+        # codig = str(conecao.readline())
+
+
+        # if codig == 'b1':
+        #     if(BTN[0] == True):
+        #         BTN[0] = False
+        #     else:
+        #         BTN[0] = True
+        # if codig == 'b2':
+        #     if(BTN[1] == True):
+        #         BTN[1] = False
+        #     else:
+        #         BTN[1] = True
+        # if codig == 'b3':
+        #     if(BTN[2] == True):
+        #         BTN[2] = False
+        #     else:
+        #         BTN[2] = True
+        # if codig == 'b4':
+        #     if(BTN[3] == True):
+        #         BTN[3] = False
+        #     else:
+        #         BTN[3] = True
+        # if codig == 'b5':
+        #     if(BTN[4] == True):
+        #         BTN[4] = False
+        #     else:
+        #         BTN[4] = True
+        # if codig == 'b6':
+        #     if(BTN[5] == True):
+        #         BTN[5] = False
+        #     else:
+        #         BTN[5] = True
+        # if codig == 'b7':
+        #     if(BTN[6] == True):
+        #         BTN[6] = False
+        #     else:
+        #         BTN[6] = True
+        # if codig == 'b8':
+        #     if(BTN[7] == True):
+        #         BTN[7] = False
+        #     else:
+        #         BTN[7] = True
         # # # # se campo vasio = []
         # interface info-------------------------------------------------
         # loop modo run
-
+        BTN = [True, False, False, False, False, False, False, False]
         i = 1
         while (i < 17):
             aux = 'm' + str(i)
@@ -361,6 +390,7 @@ while True:
     # ============================================================================================================================================================================================================================================
     if event == sg.WIN_CLOSED or event == 'Cancel':
         window.close()
+        #conecao.close()
         break
 
 
