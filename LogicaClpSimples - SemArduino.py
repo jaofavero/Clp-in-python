@@ -1,5 +1,4 @@
 import PySimpleGUI as sg
-import serial
 
 
 #  porta = "COM10"
@@ -11,41 +10,30 @@ sg.theme('DarkBlue2')
 # MODO PROGRAMAÇÃO-------------------------------------------------------------------------------------------------------
 
 def separaEquacao(linha, LED, MEMORIA):
-    print(linha)
-    listaAux=[]
-    litaAux=linha
+    lista = []
+    lista[:] = formatacao(linha)
     aux=0
     aux2 = 0
-    divisoria = litaAux.index('=')
-    if 'l' in litaAux[:divisoria]:
-        aux = litaAux[litaAux.index('l')+1]
+    divisoria = lista.index('=')
+    if 'l' in lista[:divisoria]:
+        aux = lista[lista.index('l')+1]
         aux = 'l' + str(aux)
         aux2 = LED.index(aux)+2
-        LED[aux2] = formatacao(litaAux[divisoria:])
+        LED[aux2] = lista[divisoria:]
         return LED
     aux=0
     aux2 = 0
-    aux3 = 0
-    if 'm' in litaAux[:divisoria]:
-        isNumber=0
-        aux = litaAux[litaAux.index('m')+1]
-        j=0
-        aux3 = int(aux)+1
-        aux4 = int(aux)
-        print(litaAux[int(aux)])
-        while j < 10:
-            print(litaAux[aux3])
-            if int(litaAux[aux3]) == j:
-                isNumber = isNumber+1
-                if isNumber != 0:
-                    aux4 = 10 + int(litaAux[int(aux3)])
-                    litaAux.pop(aux3)
-                    print(aux4)
-                    litaAux[aux]=str(aux4)
-            j = j+1
-        aux = 'm' + str(aux)
-        aux2 = MEMORIA.index(aux)+2
-        MEMORIA[aux2] = formatacao(litaAux[divisoria:])
+    if 'm' in lista[:divisoria]:
+        aux = lista.index('m')
+        aux3 = lista[lista.index('m')+1]
+        if (divisoria!=2):
+            aux = aux+1
+            print(lista[aux])
+            lista[aux] = lista[aux]+lista[aux+1]
+            lista.pop(aux+1)
+        aux3 = 'm' + str(aux3)
+        aux2 = MEMORIA.index(aux3)+2
+        MEMORIA[aux2] = lista[divisoria:]
         return MEMORIA
     return "Invalido"
 
@@ -56,7 +44,7 @@ def organizaMemoria(expressao):
     has = True
     i = 0
     isNumber = 0
-    j=0
+    j=1
     while has:
         if 'm' in expressao[i:]:
             aux = expressao.index('m', i)
