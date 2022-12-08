@@ -120,7 +120,8 @@ def traduzLED(auxLED):
             print(str(aux) + ":" + str(LED[LED.index(aux)+1]))
         i = i+1
     traducaoLED = traducaoLED + 'b'
-    return traducaoLED
+    print(traducaoLED)
+    return LED
 
 
 
@@ -379,8 +380,7 @@ while True:
 
         btnArduino="zB1=1;B2=0;B3=0;B4=0;B5=0;B6=1;.\r\n"
         BTN = traduzBTN(btnArduino)
-        ledArduino = traduzLED(LED)
-        print(ledArduino)
+        LED = traduzLED(LED)
         # if codig == 'b1':
         #     if(BTN[0] == True):
         #         BTN[0] = False
