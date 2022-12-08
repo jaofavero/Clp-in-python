@@ -37,9 +37,6 @@ def separaEquacao(linha, LED, MEMORIA):
         return MEMORIA
     return "Invalido"
 
-
-
-
 def organizaMemoria(expressao):
     has = True
     i = 0
@@ -71,6 +68,64 @@ def formatacao(expressao):
         lista = organizaMemoria(lista)
         return lista
 
+#Tradutores pro arduino
+def traduzBTN(btnArduino):
+    auxBTN = [False, False, False, False, False, False, False, False]
+    nBtn = 0
+    inicio= int(btnArduino.index('z'))+1
+    final= int(btnArduino.index('.'))
+    lista = []
+    lista[:] = btnArduino
+    lista = lista[inicio:final]
+    nBtn = lista.count('B')
+    i = 0
+    div = 0
+    posicao = 0
+
+    while i < nBtn:
+        posicao = (lista.index('=',div)+1)
+        if(int(lista[posicao])==0):
+            auxBTN[i]=False
+        if(int(lista[posicao])==1):
+            auxBTN[i]=True
+        #print(i)
+        #print(BTN[i])
+        div = lista.index(';',div)+1
+        i = i+1
+    print(lista)
+    print(auxBTN)
+    return auxBTN
+
+def traduzLED(auxLED):
+    auxChar=''
+    traducaoLED='Y'
+    i = 1
+    while (i < 17):
+        aux = 'm' + str(i)
+        if (MEMORIA[MEMORIA.index(aux)+2] != ("expressao")):
+            MEMORIA[MEMORIA.index(aux)+1] = valorExpressao(MEMORIA[MEMORIA.index(aux)+2], BTN, LED, MEMORIA)
+            print(str(aux) + ":" + str(MEMORIA[MEMORIA.index(aux)+1]))
+        if (i < 9):
+            aux = 'l' + str(i)
+            if (LED[LED.index(aux)+2] != ("expressao")):
+                LED[LED.index(aux)+1] = valorExpressao(LED[LED.index(aux)+2],
+                                                        BTN, LED, MEMORIA)
+            if LED[LED.index(aux)+1] == True:
+                auxChar = '1'
+            if LED[LED.index(aux)+1] == False:
+                auxChar = '0'
+
+            traducaoLED=traducaoLED+'S'+str(i)+'='+auxChar+';'
+        
+            print(str(aux) + ":" + str(LED[LED.index(aux)+1]))
+        i = i+1
+    traducaoLED = traducaoLED + 'b'
+    return traducaoLED
+
+
+
+
+#Operadores
 def opAnd(a, b):
     if (a and b):
         return True
@@ -109,7 +164,6 @@ def entreParenteses(expressao, fim, inicio, BTN, LED, MEMORIA):
   # Checar Memoria
     if 'm' in expressao[i:fim]:
         aux = expressao[expressao.index('m', i)+1]
-        print(aux)
         aux = 'm' + aux
       #  print("+3 " + str(MEMORIA[MEMORIA.index(aux)+3]))
      #   print("+2 " + str(MEMORIA[MEMORIA.index(aux)+2]))
@@ -323,7 +377,10 @@ while True:
             k=k+1
         # codig = str(conecao.readline())
 
-
+        btnArduino="zB1=1;B2=0;B3=0;B4=0;B5=0;B6=1;.\r\n"
+        BTN = traduzBTN(btnArduino)
+        ledArduino = traduzLED(LED)
+        print(ledArduino)
         # if codig == 'b1':
         #     if(BTN[0] == True):
         #         BTN[0] = False
@@ -367,8 +424,8 @@ while True:
         # # # # se campo vasio = []
         # interface info-------------------------------------------------
         # loop modo run
-        BTN = [True, False, True, False, True, False, True, False]
-        i = 1
+
+        '''i = 1
         while (i < 17):
             aux = 'm' + str(i)
             if (MEMORIA[MEMORIA.index(aux)+2] != ("expressao")):
@@ -381,7 +438,7 @@ while True:
                                                         BTN, LED, MEMORIA)
                     # manda info pro arduino aqui mesmo LED(i) = (LED[LED.index(aux)+1])
                     print(str(aux) + ":" + str(LED[LED.index(aux)+1]))
-            i = i+1
+            i = i+1'''
     # ============================================================================================================================================================================================================================================
     if event == sg.WIN_CLOSED or event == 'Cancel':
         window.close()
