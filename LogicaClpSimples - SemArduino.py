@@ -96,7 +96,7 @@ def traduzBTN(btnArduino):
     print(auxBTN)
     return auxBTN
 
-def traduzLED(auxLED):
+def traduzLED(auxLED, BTN, MEMORIA):
     auxChar=''
     traducaoLED='Y'
     i = 1
@@ -380,7 +380,7 @@ while True:
 
         btnArduino="zB1=1;B2=0;B3=0;B4=0;B5=0;B6=1;.\r\n"
         BTN = traduzBTN(btnArduino)
-        LED = traduzLED(LED)
+        LED = traduzLED(LED, BTN, MEMORIA)
         # if codig == 'b1':
         #     if(BTN[0] == True):
         #         BTN[0] = False
